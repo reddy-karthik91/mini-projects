@@ -8,6 +8,7 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { User } from '../../models/auth.model';
 
 @Component({
   selector: 'app-signup',
@@ -57,6 +58,23 @@ export class SignupComponent {
 
     //logic for form submission
     if (this.signUpForm.valid) {
+      const newUser = this.signUpForm.value;
+
+      //get existing users from local storage or empty array if none exist
+      const existingUserRaw = localStorage.getItem('users');
+      const users: User[] = existingUserRaw ? JSON.parse(existingUserRaw) : [];
+
+      //check if email already exists
+      const emailExists = users.some(user => user.email === newUser.email);
+      if(emailExists){
+        alert('Email already exists. Please use a different email.');
+        return;
+      }
+
+      //add new user and save to local storage
+      users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(users));
+
       //account creation and submission logic
       console.log('Form submission successful!');
       console.log(this.signUpForm.value);
