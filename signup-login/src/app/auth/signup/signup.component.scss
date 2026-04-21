@@ -1,0 +1,64 @@
+/* 1. Center the entire container on the screen */
+.form-container {
+    display: flex;
+    justify-content: center; /* Horizontal center */
+    align-items: center;     /* Vertical center */
+    min-height: 100vh;       /* Take up full viewport height */
+    background-color: #f4f4f4; /* Optional: light background */
+  }
+  
+  /* 2. Style the form card */
+  .centered {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Limits the width on large screens */
+    text-align: center; /* Centers the h2, h4, and button text */
+  }
+  
+  /* 3. Stack labels and inputs vertically and align them left */
+  .form-group {
+    margin-bottom: 1.5rem;
+    text-align: left; /* Keeps labels aligned to the left for better UX */
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .form-group input {
+    width: 100%; /* Makes inputs fill the container */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding doesn't break width */
+  }
+  
+  /* 4. Style the button to be full width or centered */
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  /* 5. Style the validation error message and input border */
+  .error-text{
+    color:red;
+  }
+
+  // input.ng-invalid.ng-touched {
+  //   border-color: red;
+  // }

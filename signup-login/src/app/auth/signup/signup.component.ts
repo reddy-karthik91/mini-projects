@@ -1,0 +1,78 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+
+@Component({
+  selector: 'app-signup',
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.scss',
+})
+export class SignupComponent {
+  signUpForm: FormGroup;
+  isSubmitted: boolean = false;
+  showSuccessMessage: boolean = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router
+  ) {
+    //creating the form
+    this.signUpForm = this.fb.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(6),
+      ]],
+      confirmPassword: ['', [
+        Validators.required,
+        Validators.minLength(6),
+      ]],
+    });
+  }
+
+  //method which submits the form
+  onSubmit() {
+    //taking a boolean flag for checking the form submission
+    this.isSubmitted = true;
+
+    //taking the values of password and confirm password fields
+    const password_value = this.signUpForm.get('password')?.value;
+    const confirmPassword_value = this.signUpForm.get('confirmPassword')?.value;
+
+    //1.checking if the password and confirm password fields match, if not setting an error on the confirm password field
+    //2.Can also add a custom validator to separate the logic of password matching from the form submission logic, but for simplicity, we are doing it here
+    if(password_value !== confirmPassword_value) {
+      this.signUpForm.get('confirmPassword')?.setErrors({ mismatch: true });
+    }
+
+    //logic for form submission
+    if (this.signUpForm.valid) {
+      //account creation and submission logic
+      console.log('Form submission successful!');
+      console.log(this.signUpForm.value);
+      console.log('success: ',this.signUpForm.valid);
+      this.signUpForm.reset();
+      this.isSubmitted = false;
+
+      //success message after successful account creation
+      this.showSuccessMessage = true;
+      //wait for 3 seconds and then redirect
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      },3000);
+    } else {
+      console.log('Form submission failed!');
+      console.log('failure: ',this.signUpForm.valid);
+    }
+  }
+}
