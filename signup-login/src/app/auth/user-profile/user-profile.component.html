@@ -1,0 +1,58 @@
+<div class="profile-container">
+  <div class="profile-card" *ngIf="!isEditing; else editMode">
+    <div class="profile-header">
+      <h2>Welcome, {{ currentUser?.firstName || "Guest" }}!</h2>
+      <p class="subtitle">Member since 2024</p>
+    </div>
+
+    <hr />
+
+    <div class="profile-body">
+      <div class="info-group">
+        <label>Full Name:</label>
+        <p>{{ currentUser.firstName }} {{ currentUser.lastName }}</p>
+      </div>
+    </div>
+
+    <div class="info-group">
+      <label>Email address:</label>
+      <p>{{ currentUser.email }}</p>
+    </div>
+
+    <div class="info-group">
+      <label>Account status:</label>
+      <p><span class="badge">Active</span></p>
+    </div>
+
+    <div class="profile-actions">
+      <button class="btn-edit" (click)="editUser()">Edit Profile</button>
+      <button class="btn-logout" (click)="onLogout()">Logout</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #editMode>
+  <div class="form-container">
+  <form [formGroup]="editForm">
+    <div class="form-group">
+      <label for="firstName">First Name:</label>
+      <input type="text" formControlName="firstName" />
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last Name:</label>
+      <input type="text" formControlName="lastName" />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" formControlName="email" />
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="form-button" (click)="toggleEdit()">Cancel</button>
+      <button type="submit" class="form-button" (click)="onSave()">Save</button>
+    </div>
+  </form>
+  </div>
+</ng-template>
