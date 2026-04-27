@@ -7,7 +7,7 @@ import {
   Validators,
   FormBuilder,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { User } from '../../models/auth.model';
 
 @Component({
@@ -19,9 +19,11 @@ import { User } from '../../models/auth.model';
 export class LoginComponent {
   logInForm: FormGroup;
   isSubmitted: boolean = false;
+  isPasswordVisible: boolean = false;
 
   constructor(
     private fb: FormBuilder,
+    private router: Router
   )
     {
     this.logInForm = this.fb.group({
@@ -56,22 +58,27 @@ export class LoginComponent {
       const users:User[] = existingUser ? JSON.parse(existingUser) : [];
 
       // check if email already exists and email and password match
-      const userExists = users.some(user => user.email === loginUser.email && user.password === loginUser.password);
+      const userExists = users.find(user => user.email === loginUser.email && user.password === loginUser.password);
+
+      console.log('userExists:', userExists);
 
       //if user exists, log in successfully, else show an alert for invalid email or password
       if(userExists){
-        console.log('User logged in successfully!');
-        console.log(this.logInForm.value);
-        console.log('success: ',this.logInForm.valid);
+        localStorage.setItem('currentUser', JSON.stringify(userExists));
         this.logInForm.reset();
         this.isSubmitted = false;
+        //take to user profile section after 2 seconds
+        setTimeout(() => {
+          this.router.navigate(['/userProfile']);
+        }, 1000);
       } else {
         alert('Invalid email or password. Please try again.');
       }
-    } else {
-      console.log('Login failed. Please check your input.');
-      console.log('failure: ',this.logInForm.valid);
     }
+  }
+
+  togglePassword(){
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
 }

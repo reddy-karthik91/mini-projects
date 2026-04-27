@@ -20,24 +20,17 @@ export class SignupComponent {
   signUpForm: FormGroup;
   isSubmitted: boolean = false;
   showSuccessMessage: boolean = false;
+  isPasswordVisible: boolean = false;
+  isConfirmPasswordVisible: boolean = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router
-  ) {
+  constructor(private fb: FormBuilder, private router: Router) {
     //creating the form
     this.signUpForm = this.fb.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(6),
-      ]],
-      confirmPassword: ['', [
-        Validators.required,
-        Validators.minLength(6),
-      ]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -52,7 +45,7 @@ export class SignupComponent {
 
     //1.checking if the password and confirm password fields match, if not setting an error on the confirm password field
     //2.Can also add a custom validator to separate the logic of password matching from the form submission logic, but for simplicity, we are doing it here
-    if(password_value !== confirmPassword_value) {
+    if (password_value !== confirmPassword_value) {
       this.signUpForm.get('confirmPassword')?.setErrors({ mismatch: true });
     }
 
@@ -65,8 +58,8 @@ export class SignupComponent {
       const users: User[] = existingUserRaw ? JSON.parse(existingUserRaw) : [];
 
       //check if email already exists
-      const emailExists = users.some(user => user.email === newUser.email);
-      if(emailExists){
+      const emailExists = users.some((user) => user.email === newUser.email);
+      if (emailExists) {
         alert('Email already exists. Please use a different email.');
         return;
       }
@@ -78,7 +71,7 @@ export class SignupComponent {
       //account creation and submission logic
       console.log('Form submission successful!');
       console.log(this.signUpForm.value);
-      console.log('success: ',this.signUpForm.valid);
+      console.log('success: ', this.signUpForm.valid);
       this.signUpForm.reset();
       this.isSubmitted = false;
 
@@ -87,10 +80,22 @@ export class SignupComponent {
       //wait for 3 seconds and then redirect
       setTimeout(() => {
         this.router.navigate(['/login']);
-      },3000);
+      }, 3000);
     } else {
       console.log('Form submission failed!');
-      console.log('failure: ',this.signUpForm.valid);
+      console.log('failure: ', this.signUpForm.valid);
     }
+  }
+
+  //function to toggle password visibility
+  togglePassword() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+    console.log('toggle clicked!');
+  }
+
+  //function to toggle password visibility
+  toggleConfirmPassword() {
+    this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
+    console.log('toggle confirm password clicked!');
   }
 }

@@ -62,3 +62,36 @@
   // input.ng-invalid.ng-touched {
   //   border-color: red;
   // }
+
+  .input-wrapper {
+    position: relative; // This is the anchor for the icon
+    display: flex;
+    align-items: center;
+  
+    input {
+      width: 100%;
+      padding: 10px;
+      padding-right: 40px; // Add extra space on the right so text doesn't overlap the icon
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+  
+      &:focus {
+        border-color: #007bff;
+      }
+    }
+  
+    .toggle-icon {
+      position: absolute;
+      right: 12px; // Pushes it 12px from the right edge
+      cursor: pointer;
+      user-select: none; // Prevents the icon from being "highlighted" like text
+      font-size: 1.2rem;
+      filter: grayscale(100%); // Makes the emoji look more like a UI icon
+      opacity: 0.6;
+  
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
