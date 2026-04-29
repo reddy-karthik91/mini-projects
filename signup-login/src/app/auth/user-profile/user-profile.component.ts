@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth-service/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,7 +16,11 @@ export class UserProfileComponent implements OnInit {
   editForm!: FormGroup;
   isEditing: boolean = false; //toggle flag
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     // Retrieve the current user from local storage
@@ -44,7 +49,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   onLogout() {
-    localStorage.removeItem('currentUser');
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 

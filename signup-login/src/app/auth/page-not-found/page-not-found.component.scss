@@ -1,0 +1,68 @@
+.not-found-wrapper {
+    height: 85vh; // Keeps it centered between header and footer
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9fb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .not-found-content {
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    max-width: 500px;
+    width: 90%;
+  
+    .error-code {
+      font-size: 8rem;
+      font-weight: 900;
+      margin: 0;
+      line-height: 1;
+      background: linear-gradient(45deg, #3a7bd5, #00d2ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  
+    .icon-box {
+      font-size: 3rem;
+      margin: 20px 0;
+    }
+  
+    h2 {
+      color: #333;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+  
+    p {
+      color: #666;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+  
+    .btn-home {
+      background-color: #3a7bd5;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.2s;
+      text-decoration: none;
+  
+      &:hover {
+        background-color: #00d2ff;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3);
+        cursor: pointer;
+      }
+  
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
