@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '../../models/auth.model';
+import { AuthService } from '../../services/auth-service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   )
     {
     this.logInForm = this.fb.group({
@@ -38,16 +40,6 @@ export class LoginComponent {
   onLogin(){
     //taking a boolean flag for checking the form submission
     this.isSubmitted = true;
-
-    //taking the values of email and password
-    const email_value = this.logInForm.get('email')?.value;
-    const password_value = this.logInForm.get('password')?.value;
-
-    //checking if the email and password fields are empty, if yes setting an error on both fields
-    if(email_value === '' || password_value === '' ){
-      this.logInForm.get('email')?.setErrors({ required: true });
-      this.logInForm.get('password')?.setErrors({ required: true });
-    }
 
     //logic for form submission
     if(this.logInForm.valid){
@@ -64,14 +56,21 @@ export class LoginComponent {
 
       //if user exists, log in successfully, else show an alert for invalid email or password
       if(userExists){
-        localStorage.setItem('currentUser', JSON.stringify(userExists));
+        // localStorage.setItem('currentUser', JSON.stringify(userExists));
+
+        // instead of setting the user data in local storage directly from the component, 
+        // we will use the AuthService to handle the login state and store the user data. 
+        // This way we can centralize the authentication logic and make it easier to manage across the application.
+        this.authService.login(userExists);
         this.logInForm.reset();
         this.isSubmitted = false;
-        //take to user profile section after 2 seconds
+
+        //take to user profile section after 0.5 second
         setTimeout(() => {
           this.router.navigate(['/userProfile']);
-        }, 1000);
+        }, 500);
       } else {
+        this.isSubmitted = false;
         alert('Invalid email or password. Please try again.');
       }
     }

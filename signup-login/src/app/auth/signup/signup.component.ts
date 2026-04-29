@@ -53,6 +53,17 @@ export class SignupComponent {
     if (this.signUpForm.valid) {
       const newUser = this.signUpForm.value;
 
+      //assigning a default role to the user, 
+      // in a real application this should be handled by the backend and not the frontend for security reasons,
+      // but for simplicity, we are doing it here
+      const adminEmail = 'admin@project.com';
+
+      if(newUser.email === adminEmail){
+        newUser.role = 'admin';
+      } else {
+        newUser.role = 'user';
+      }
+
       //get existing users from local storage or empty array if none exist
       const existingUserRaw = localStorage.getItem('users');
       const users: User[] = existingUserRaw ? JSON.parse(existingUserRaw) : [];
