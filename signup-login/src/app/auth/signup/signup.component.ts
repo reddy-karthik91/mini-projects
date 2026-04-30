@@ -51,7 +51,10 @@ export class SignupComponent {
 
     //logic for form submission
     if (this.signUpForm.valid) {
-      const newUser = this.signUpForm.value;
+      const newUser = {
+        ...this.signUpForm.value,
+        activeSince: new Date().toISOString(),
+      };
 
       //assigning a default role to the user, 
       // in a real application this should be handled by the backend and not the frontend for security reasons,
@@ -80,9 +83,6 @@ export class SignupComponent {
       localStorage.setItem('users', JSON.stringify(users));
 
       //account creation and submission logic
-      console.log('Form submission successful!');
-      console.log(this.signUpForm.value);
-      console.log('success: ', this.signUpForm.valid);
       this.signUpForm.reset();
       this.isSubmitted = false;
 
@@ -93,7 +93,6 @@ export class SignupComponent {
         this.router.navigate(['/login']);
       }, 3000);
     } else {
-      console.log('Form submission failed!');
       console.log('failure: ', this.signUpForm.valid);
     }
   }
@@ -101,12 +100,10 @@ export class SignupComponent {
   //function to toggle password visibility
   togglePassword() {
     this.isPasswordVisible = !this.isPasswordVisible;
-    console.log('toggle clicked!');
   }
 
   //function to toggle password visibility
   toggleConfirmPassword() {
     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
-    console.log('toggle confirm password clicked!');
   }
 }

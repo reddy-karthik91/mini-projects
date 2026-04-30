@@ -24,6 +24,11 @@
       <p><span class="badge">Active</span></p>
     </div>
 
+    <div class="info-group">
+      <label>Active since:</label>
+      <p>{{ currentUser?.activeSince | date:'short' }}</p>
+    </div>
+
     <div class="profile-actions">
       <button class="btn-edit" (click)="editUser()">Edit Profile</button>
       <button class="btn-logout" (click)="onLogout()">Logout</button>

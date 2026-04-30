@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, interval, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -39,5 +39,11 @@ export class AuthService {
   logout(){
     localStorage.removeItem('currentUser');
     this.loggedIn.next(false); // Update the login status, Broadcast that we are logged out
+  }
+
+  // method to simulate a dashboard timer that ticks every second
+  getDashTime(): Observable<number>{
+    // interval(1000) emits 0, 1, 2, 3... every 1000ms (1 second)
+    return interval(1000);
   }
 }
