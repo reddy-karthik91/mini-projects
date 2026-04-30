@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin',
@@ -23,7 +24,8 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ){}
 
 ngOnInit(): void {
@@ -52,7 +54,7 @@ refreshUserState(){
 
 // Method to automatically log out the user after session expiration
 autoLogout(){
-  alert('Your session has expired. Please log in again.');
+  this.toastr.warning('Your session has expired. Please log in again.');
   this.authService.logout();
   this.router.navigate(['/login']);
 }
@@ -69,7 +71,7 @@ deleteUser(email: string){
     this.users = this.users.filter(user => user.email !== email);
     // Update localStorage
     localStorage.setItem('users', JSON.stringify(this.users));
-    alert('User deleted successfully!');
+    this.toastr.warning('User deleted successfully!');
   }
 }
  

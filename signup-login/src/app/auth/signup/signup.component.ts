@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '../../models/auth.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -23,7 +24,10 @@ export class SignupComponent {
   isPasswordVisible: boolean = false;
   isConfirmPasswordVisible: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router, 
+    private toastr: ToastrService) {
     //creating the form
     this.signUpForm = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -74,7 +78,7 @@ export class SignupComponent {
       //check if email already exists
       const emailExists = users.some((user) => user.email === newUser.email);
       if (emailExists) {
-        alert('Email already exists. Please use a different email.');
+        this.toastr.info('Email already exists. Please use a different email.');
         return;
       }
 
