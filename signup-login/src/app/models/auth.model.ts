@@ -5,4 +5,5 @@ export interface User {
     password?: string;
     activeSince?: string;
     role: 'user' | 'admin';
+    profilePic?: string;
 }

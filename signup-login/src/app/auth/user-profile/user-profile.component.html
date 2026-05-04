@@ -29,6 +29,17 @@
       <p>{{ currentUser?.activeSince | date:'short' }}</p>
     </div>
 
+    <div class="profile-upload-wrapper">
+      <div class="image-preview-container">
+        <img [src]="currentUser.profilePic || 'assets/default-avatar.png'" alt="Profile">
+      </div>
+      
+      <label for="file-upload" class="upload-btn">
+        Change Photo
+      </label>
+      <input id="file-upload" type="file" (change)="onFileSelected($event)" accept="image/*">
+    </div>
+
     <div class="profile-actions">
       <button class="btn-edit" (click)="editUser()">Edit Profile</button>
       <button class="btn-logout" (click)="onLogout()">Logout</button>
