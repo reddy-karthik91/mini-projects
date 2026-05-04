@@ -10,6 +10,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { User } from '../../models/auth.model';
 import { AuthService } from '../../services/auth-service/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService
   )
     {
     this.logInForm = this.fb.group({
@@ -71,7 +73,7 @@ export class LoginComponent {
         }, 500);
       } else {
         this.isSubmitted = false;
-        alert('Invalid email or password. Please try again.');
+        this.toastr.warning('Invalid email or password. Please try again.');
       }
     }
   }

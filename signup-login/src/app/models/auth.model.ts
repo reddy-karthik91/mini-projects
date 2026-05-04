@@ -3,5 +3,7 @@ export interface User {
     lastName: string;
     email: string;
     password?: string;
+    activeSince?: string;
     role: 'user' | 'admin';
+    profilePic?: string;
 }

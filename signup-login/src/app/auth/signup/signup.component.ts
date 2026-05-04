@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '../../models/auth.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -23,7 +24,10 @@ export class SignupComponent {
   isPasswordVisible: boolean = false;
   isConfirmPasswordVisible: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router, 
+    private toastr: ToastrService) {
     //creating the form
     this.signUpForm = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -51,7 +55,10 @@ export class SignupComponent {
 
     //logic for form submission
     if (this.signUpForm.valid) {
-      const newUser = this.signUpForm.value;
+      const newUser = {
+        ...this.signUpForm.value,
+        activeSince: new Date().toISOString(),
+      };
 
       //assigning a default role to the user, 
       // in a real application this should be handled by the backend and not the frontend for security reasons,
@@ -71,7 +78,7 @@ export class SignupComponent {
       //check if email already exists
       const emailExists = users.some((user) => user.email === newUser.email);
       if (emailExists) {
-        alert('Email already exists. Please use a different email.');
+        this.toastr.info('Email already exists. Please use a different email.');
         return;
       }
 
@@ -80,9 +87,6 @@ export class SignupComponent {
       localStorage.setItem('users', JSON.stringify(users));
 
       //account creation and submission logic
-      console.log('Form submission successful!');
-      console.log(this.signUpForm.value);
-      console.log('success: ', this.signUpForm.valid);
       this.signUpForm.reset();
       this.isSubmitted = false;
 
@@ -93,7 +97,6 @@ export class SignupComponent {
         this.router.navigate(['/login']);
       }, 3000);
     } else {
-      console.log('Form submission failed!');
       console.log('failure: ', this.signUpForm.valid);
     }
   }
@@ -101,12 +104,10 @@ export class SignupComponent {
   //function to toggle password visibility
   togglePassword() {
     this.isPasswordVisible = !this.isPasswordVisible;
-    console.log('toggle clicked!');
   }
 
   //function to toggle password visibility
   toggleConfirmPassword() {
     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
-    console.log('toggle confirm password clicked!');
   }
 }

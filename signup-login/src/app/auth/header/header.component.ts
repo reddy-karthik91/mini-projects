@@ -37,7 +37,6 @@ ngOnInit(): void {
 
 // Logout function to clear user data and navigate to login page
 logout(){
-  // localStorage.removeItem('currentUser');
   this.authService.logout(); // Call the logout method from AuthService to clear user data and update login status
   this.router.navigate(['/login']);
 }

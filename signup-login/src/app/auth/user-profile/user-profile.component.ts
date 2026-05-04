@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,7 +20,8 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -83,6 +85,42 @@ export class UserProfileComponent implements OnInit {
 
       // 4. Close edit mode
       this.isEditing = false;
+    }
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+  
+    if (file) {
+      // // Check if file is larger than 1MB (1024 * 1024 bytes)
+      if(file.size > 1024 * 1024) { 
+        this.toastr.error('File is too large! Please choose an image under 1MB.', 'Size Error');
+        return;
+      }
+
+      const reader = new FileReader();
+  
+      // This runs once the file is finished being "read"
+      reader.onload = (e: any) => {
+        const base64String = e.target.result;
+        this.saveImage(base64String);
+      };
+  
+      reader.readAsDataURL(file); // Starts the reading process
+    }
+  }
+  
+  saveImage(imageStr: string) {
+    this.currentUser.profilePic = imageStr;
+    
+    // Update the user in your localStorage 'users' array
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const index = users.findIndex((u: any) => u.email === this.currentUser.email);
+    
+    if (index !== -1) {
+      users[index].profilePic = imageStr;
+      localStorage.setItem('users', JSON.stringify(users));
+      this.toastr.success('Profile picture updated!');
     }
   }
 }
