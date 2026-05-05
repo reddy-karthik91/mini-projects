@@ -1,0 +1,59 @@
+<div [class]="selectedTheme" class="settings-page-container">
+    <div class="settings-card">
+        <header class="settings-header">
+            <h2>K-Admin Settings</h2>
+            <p>Manage your workspace preferences and account security.</p>
+        </header>
+
+        <!-- THEME SECTION (Immediate Update) -->
+        <section class="settings-section">
+            <label class="section-label">Workspace Appearance</label>
+            <div class="theme-grid">
+                <select [(ngModel)]="selectedTheme" class="custom-select">
+                    <option value="light-theme">☀️ Light Mode</option>
+                    <option value="dark-theme">🌙 Dark Mode</option>
+                    <option value="blue-theme">🌊 Ocean Blue</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- BIO SECTION (Immediate Update) -->
+        <section class="settings-section">
+            <label class="section-label">Public Bio</label>
+            <textarea [(ngModel)]="userBio" placeholder="Tell us about yourself..." class="custom-textarea"></textarea>
+            <div class="live-preview-box">
+                <small>Live Preview:</small>
+                <p>{{ userBio || 'No bio entered yet...' }}</p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- EMAIL SECTION (Draft/Deferred Mode) -->
+        <section class="settings-section critical">
+            <label class="section-label">
+                Critical Email
+            </label>
+            <input 
+                type="email" 
+                [value]="draftEmail" 
+                (input)="draftEmail = $any($event.target).value" 
+                class="custom-input"
+                placeholder="Enter new email">
+            <div class="system-status">
+                <span class="status-dot"></span>
+                Current System Email: <strong>{{ user?.email }}</strong>
+            </div>
+        </section>
+
+        <!-- ACTIONS -->
+        <div class="button-group">
+            <button (click)="saveSettings()" class="btn btn-save">
+                Save Changes
+            </button>
+            <button (click)="cancelChanges()" class="btn btn-cancel">
+                Discard
+            </button>
+        </div>
+    </div>
+</div>

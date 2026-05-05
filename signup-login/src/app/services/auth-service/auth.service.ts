@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, interval, Observable } from 'rxjs';
+import { User } from '../../models/auth.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ export class AuthService {
   // Check if the user has a token in local storage
   private loggedIn = new BehaviorSubject<boolean>(this.hasUser());
   // Check if the user has admin role in local storage
-  private adminStatus = new BehaviorSubject<boolean>(this.isAdmin()); 
+  private adminStatus = new BehaviorSubject<boolean>(this.isAdmin());
 
   constructor() {}
 
@@ -24,26 +25,33 @@ export class AuthService {
 
   // Expose the status as an Observable for components to "listen" to
   isLoggedIn$ = this.loggedIn.asObservable();
- 
+
   // Expose the admin status as an Observable for components to "listen" to
   isAdmin$ = this.adminStatus.asObservable();
 
   //Methods to update the state
-  login(userData: any){
+  login(userData: any) {
     localStorage.setItem('currentUser', JSON.stringify(userData));
     this.loggedIn.next(true); // Update the login status, Broadcast that we are logged in
     this.adminStatus.next(userData.role === 'admin'); // Update the admin status, Broadcast the admin status
   }
 
   // Method to log out the user
-  logout(){
+  logout() {
     localStorage.removeItem('currentUser');
     this.loggedIn.next(false); // Update the login status, Broadcast that we are logged out
+    this.adminStatus.next(false); // Update the admin status, Broadcast that we are no longer admin
   }
 
   // method to simulate a dashboard timer that ticks every second
-  getDashTime(): Observable<number>{
+  getDashTime(): Observable<number> {
     // interval(1000) emits 0, 1, 2, 3... every 1000ms (1 second)
     return interval(1000);
+  }
+
+  // Method to get the current user data from local storage
+  getCurrentUser(): User {
+    const user = localStorage.getItem('currentUser');
+    return user ? JSON.parse(user) : null;
   }
 }

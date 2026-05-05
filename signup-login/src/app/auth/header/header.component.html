@@ -10,7 +10,8 @@
       <ng-container *ngIf="isLoggedIn">
         <li><a [routerLink]="['/userProfile']" routerLinkActive="active">Profile</a></li>
         <li><a (click)="logout()" class="logout-link">Logout</a></li>
-        <li *ngIf="isAdmin"><a [routerLink]="['/admin']" routerLinkActive="active">Admin</a></li>
+        <li *appHasRole="'admin'"><a [routerLink]="['/admin']" routerLinkActive="active">Admin</a></li>
+        <li><a [routerLink]="['/profileSettings']" class="logout-link">Settings</a></li>
       </ng-container>
     </ul>
   </nav>
