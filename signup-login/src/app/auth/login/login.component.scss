@@ -94,4 +94,10 @@
         opacity: 1;
       }
     }
+
+    .disabled-icon {
+      cursor: not-allowed;
+      opacity: 0.3; /* Makes it look disabled */
+      pointer-events: none; /* Prevents the click event from firing */
+    }
   }

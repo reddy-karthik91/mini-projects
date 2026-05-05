@@ -58,6 +58,7 @@ export class SignupComponent {
       const newUser = {
         ...this.signUpForm.value,
         activeSince: new Date().toISOString(),
+        isActive: true,
       };
 
       //assigning a default role to the user, 

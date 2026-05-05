@@ -52,3 +52,20 @@
   
     &:hover { background: #cc0000; }
   }
+
+  .status-active {
+    background-color: #d4edda;
+    font-size: 0.8rem;
+    color: #155724;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  
+  .status-inactive {
+    background-color: #f8d7da;
+    font-size: 0.8rem;
+    color: #721c24;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }

@@ -25,8 +25,8 @@
     </div>
 
     <div class="info-group">
-      <label>Active since:</label>
-      <p>{{ currentUser?.activeSince | date:'short' }}</p>
+      <label>Account created:</label>
+      <p>{{ currentUser?.activeSince | timeAgo }}</p>
     </div>
 
     <div class="profile-upload-wrapper">

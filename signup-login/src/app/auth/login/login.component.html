@@ -30,7 +30,7 @@
             placeholder="Enter your password"
             formControlName="password"
           />
-          <span class="toggle-icon" (click)="togglePassword()">{{ isPasswordVisible ? '👁️‍🗨️' : '👁️' }}</span>
+          <span class="toggle-icon" [class.disabled-icon]="!logInForm.get('password')?.value" (click)="togglePassword()">{{ isPasswordVisible ? '👁️‍🗨️' : '👁️' }}</span>
         </div>
           <div *ngIf = "isSubmitted && logInForm.get('password')?.invalid" class="error-text">
             <small *ngIf="logInForm.get('password')?.errors?.['required']">

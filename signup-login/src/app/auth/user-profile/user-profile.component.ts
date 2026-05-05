@@ -5,10 +5,11 @@ import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { TimeAgoPipe } from '../../pipes/time-ago.pipe';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TimeAgoPipe],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss',
 })

@@ -5,10 +5,11 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { UserStatusPipe } from '../../pipes/user-status.pipe';
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule],
+  imports: [CommonModule, UserStatusPipe],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
