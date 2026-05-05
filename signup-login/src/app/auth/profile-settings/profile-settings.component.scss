@@ -1,0 +1,100 @@
+.settings-page-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    transition: background 0.5s ease, color 0.5s ease;
+
+    // THEME DEFINITIONS
+    &.light-theme { 
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        .settings-card { background: rgba(255, 255, 255, 0.9); }
+    }
+    &.dark-theme { 
+        background: #121212; color: #f0f0f0; 
+        .settings-card { background: rgba(30, 30, 30, 0.9); border: 1px solid #333; }
+        .custom-input, .custom-textarea, .custom-select { background: #2a2a2a; color: white; border-color: #444; }
+        .live-preview-box { background: #252525; }
+    }
+    &.blue-theme { 
+        background: #1a365d; color: #e2e8f0; 
+        .settings-card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+        .section-label { color: #90cdf4; }
+    }
+}
+
+.settings-card {
+    width: 100%;
+    max-width: 600px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.settings-section {
+    margin-bottom: 25px;
+    
+    .section-label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+}
+
+.custom-input, .custom-textarea, .custom-select {
+    width: 95.5%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border 0.3s;
+    
+    &:focus { outline: none; border-color: #3a7bd5; }
+}
+
+.live-preview-box {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-left: 4px solid #3a7bd5;
+    border-radius: 4px;
+    font-style: italic;
+}
+
+.divider { margin: 30px 0; border: 0; border-top: 1px solid rgba(0,0,0,0.1); }
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+
+    .btn {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: transform 0.2s, opacity 0.2s;
+
+        &:active { transform: scale(0.98); }
+    }
+
+    .btn-save { background: #27ae60; color: white; }
+    .btn-cancel { background: #e74c3c; color: white; }
+}
+
+.system-status {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    .status-dot { height: 8px; width: 8px; background: #27ae60; border-radius: 50%; }
+}
